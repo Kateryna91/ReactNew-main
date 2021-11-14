@@ -84,7 +84,7 @@ const EditPage = () => {
                     <Form>
 
                     <MyTextInput
-                            label="id"
+                           
                             name="id"
                             type="hidden"
                             value = {id}

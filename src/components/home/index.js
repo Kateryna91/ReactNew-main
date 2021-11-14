@@ -51,7 +51,7 @@ const HomePage = () => {
                                     <td>{user.fio}</td>
                                     <td>{user.email}</td>
                                     <td>
-                                        <img src={"http://localhost:15247"+user.image} alt="Самогон" width="150" />
+                                    <img src={"http://localhost:15247"+user.image+"?t="+new Date().getTime()} alt="Самогон" width="150" />
                                     </td>
                                     <td>
                                         <button className="btn btn-danger" onClick={() => onDeleteClick(user.id)}>Delete</button>
