@@ -4,7 +4,7 @@ import { Formik, Form} from 'formik';
 import MyTextInput from '../../common/MyTextInput';
 import MyPhotoInput from '../../common/MyPhotoInput';
 import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { RegisterUser } from '../../../actions/auth';
 
 const RegisterPage = () => {
@@ -17,12 +17,12 @@ const RegisterPage = () => {
         photo: null
     };
 
-    const dispatch = useDispatch();
     const formikRef = useRef();
     const titleRef = useRef();
     const [invalid, setInvalid] = useState([]);
     const history = useHistory();
 
+    const dispatch = useDispatch();
 
     const onSubmitHandler = (values) => {
 
@@ -32,26 +32,22 @@ const RegisterPage = () => {
         //у форічі біжимо по initState і передаємо дані в форму 
         //key - email, value-ff@dd.dd
         Object.entries(values).forEach(([key, value]) => formData.append(key, value));
-        
-        
-        dispatch (RegisterUser(formData))
-            .then(result=> {
+
+        dispatch(RegisterUser(formData))
+            .then(result => {
                 history.push("/");
-            }) 
-            .catch(ex=>{
-                const {errors}=ex;
+            })
+            .catch(ex => {
+                const {errors} = ex;
                 Object.entries(errors).forEach(([key, values]) => {
-                            let message = '';
-                            values.forEach(text=> message+=text+" ");
-                            formikRef.current.setFieldError(key,message);
-                        });
-            
-                        setInvalid(errors.invalid);
-                        titleRef.current.scrollIntoView({ behavior: 'smooth' })
-                    });
+                    let message = '';
+                    values.forEach(text => message += text + " ");
+                    formikRef.current.setFieldError(key, message);
+                });
 
-
-   
+                setInvalid(errors.invalid);
+                titleRef.current.scrollIntoView({ behavior: 'smooth' })
+            });
     }
 
 

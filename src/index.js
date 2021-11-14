@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import App from './App';
 import store from './store';
+import 'font-awesome/css/font-awesome.min.css';
 
 import {authUser} from './actions/auth';
 

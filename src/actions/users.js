@@ -1,35 +1,35 @@
-
-import { USERS_ALL, USERS_DELETED, USERS_EDIT} from "../constants/actionTypes";
+import { USERS_ALL, USERS_DELETED, USERS_EDIT } from "../constants/actionTypes";
 import usersService from "../services/users.service";
 
 export const UsersAll = () => async (dispatch) => {
-    try {
-        const {data} = await usersService.all(); /*Call our func and give data to it*/
-        dispatch({type: USERS_ALL, payload: data}); /*Call dispatch and send action to redux*/
-        return Promise.resolve(); /*Return ok*/
-    } 
-    catch (err) {
-        return Promise.reject(err.response.data); /*return errors*/
+    try{
+        const {data} = await usersService.all();
+        dispatch({type: USERS_ALL, payload: data});
+        return Promise.resolve();
     }
-}
-export const UserDelete = (id) => async (dispatch) => {
-    try {
-        const {data} = await usersService.delete(id); /*Call our func and give data to it*/
-        dispatch({type: USERS_DELETED, payload: id}); /*Call dispatch and send action to redux*/
-        return Promise.resolve(); /*Return ok*/
-    } 
-    catch (err) {
-        return Promise.reject(err.response.data); /*return errors*/
+    catch(err) {
+        return Promise.reject(err.response.data);
     }
 }
 
-export const UserEdit = (id) => async (dispatch) => {
-    try {
-        const {data} = await usersService.edit(id); /*Call our func and give data to it*/
-        dispatch({type: USERS_EDIT, payload: data}); /*Call dispatch and send action to redux*/
-        return Promise.resolve(); /*Return ok*/
-    } 
-    catch (err) {
-        return Promise.reject(err.response.data); /*return errors*/
+export const UsersDelete = (id) => async (dispatch) => {
+    try{
+        const {data} = await usersService.delete(id);
+        dispatch({type: USERS_DELETED, payload: id});
+        return Promise.resolve();
+    }
+    catch(err) {
+        return Promise.reject(err.response.data);
+    }
+}
+
+export const UsersEdit = (id) => async (dispatch) => {
+    try{
+        const {data} = await usersService.edit(id);
+        dispatch({type: USERS_EDIT, payload: data});
+        return Promise.resolve();
+    }
+    catch(err) {
+        return Promise.reject(err.response.data);
     }
 }

@@ -6,6 +6,8 @@ import MyPhotoInput from '../common/MyPhotoInput';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { useParams } from "react-router-dom";
+import UsersService from '../../services/users.service';
+import EclipseWidget from '../common/eclipse';
 
 const EditPage = () => {
 
@@ -18,22 +20,32 @@ const EditPage = () => {
     const formikRef = useRef();
     const titleRef = useRef();
     const [invalid, setInvalid] = useState([]);
+    const [imagePath, setImagePath] = useState("");
+    const [loading, setLoading] = useState(true);
     const history = useHistory();
 
     const dispatch = useDispatch();
 
     const onSubmitHandler = (values) => {
-
-        //Робимо форму, у якій можна відправити файл
-        const formData = new FormData();
-        //formData.append("email", values.email);
-        //у форічі біжимо по initState і передаємо дані в форму 
-        //key - email, value-ff@dd.dd
-        Object.entries(values).forEach(([key, value]) => formData.append(key, value));
-    }
+        console.log("values", values)
+         const formData = new FormData();
+         Object.entries(values).forEach(([key, value]) => formData.append(key, value));
+   UsersService.save(formData)
+   .then(res => history.push("/"));
+        }
 
     useEffect(() => {
         try {
+            console.log("id = ", id);
+            UsersService.edit(id)
+                .then(res => {
+                    const {data} = res;
+                    formikRef.current.setFieldValue("id", data.id);
+                    formikRef.current.setFieldValue("fio", data.fio);
+                    formikRef.current.setFieldValue("email", data.email);
+                    setImagePath("http://localhost:15247"+data.image);
+                    setLoading(false);
+                });
             
         }
         catch(error) {
@@ -70,6 +82,14 @@ const EditPage = () => {
                     onSubmit={onSubmitHandler}
                     validationSchema={validationFields()}>
                     <Form>
+
+                    <MyTextInput
+                            label="id"
+                            name="id"
+                            type="hidden"
+                            value = {id}
+
+                        />
                         <MyTextInput
                             label="ПІБ"
                             name="fio"
@@ -84,17 +104,22 @@ const EditPage = () => {
                             type="text"
                         />
 
-                        <MyPhotoInput
-                            myField="photo"
-                            name="photo"
-                            id="photo"
-                            formikRef={formikRef}
-                        />
+                        {imagePath &&
+                            <MyPhotoInput
+                                myField="photo"
+                                name="photo"
+                                id="photo"
+                                data={imagePath}
+                                formikRef={formikRef}
+                            />
+                        }
+                        
 
-                        <button type="submit" className="btn btn-success">Реєстрація</button>
+                        <button type="submit" className="btn btn-success">Змінити</button>
                     </Form>
                 </Formik>
             </div>
+            {loading && <EclipseWidget/> }
         </div>
     );
 }

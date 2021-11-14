@@ -6,9 +6,8 @@ const validationFields= () => {
             .email('Не коректно вказана пошта')
             .required("Вкажіть пошту"),
         fio: Yup.string()
-            .required("Вкажіть ПІБ"),
-        photo: Yup.mixed()
-            .required("Вкажіть фото"),
+            .required("Вкажіть ПІБ")
+      
       
     });
 }

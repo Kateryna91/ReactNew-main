@@ -1,45 +1,41 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { UsersAll, UserDelete } from '../../actions/users';
 import { Link } from 'react-router-dom';
+import { UsersAll, UsersDelete } from '../../actions/users';
+
 
 const HomePage = () => {
 
     const dispatch = useDispatch();
-    const {list} = useSelector (state=> state.users);
-
-    
-
-   
+    const {list} = useSelector(state => state.users);
+     
     useEffect(() => {
-        try{
-
+        try {
             dispatch(UsersAll())
-            .then()
-            .catch();
+                .then()
+                .catch();
         }
-        catch(error){
+        catch(error) {
             console.log("Server error global");
         }
-       
     }, [])
-    const onDeleteClick= (id) => {
-        try{
 
-            dispatch(UserDelete(id))
-            .then()
-            .catch();
+    const onDeleteClick = (id) => {
+        try {
+            dispatch(UsersDelete(id))
+                .then()
+                .catch();
         }
-        catch(error){
+        catch(error) {
             console.log("Server error global");
         }
     }
+
     return (
         <div className="row">
             <h1 className="text-center">Головна сторінка</h1>
             <table className="table">
                 <thead>
-             
                     <tr>
                         <th scope="col">ФІО</th>
                         <th scope="col">Email</th>
@@ -53,26 +49,20 @@ const HomePage = () => {
                             return (
                                 <tr key={index}>
                                     <td>{user.fio}</td>
-                                    <td>{user.email}
-                                    </td>
-<td>
+                                    <td>{user.email}</td>
+                                    <td>
                                         <img src={"http://localhost:15247"+user.image} alt="Самогон" width="150" />
                                     </td>
                                     <td>
                                         <button className="btn btn-danger" onClick={() => onDeleteClick(user.id)}>Delete</button>
-                                        
+                                        <Link className="btn btn-success" to={`/user/edit/${user.id}`}>Edit</Link>
                                     </td>
-                                    <Link className="btn btn-success" to={`/user/edit/${user.id}"/`}>Edit</Link>
-                                    
-   
                                 </tr>
-
                             );
                         })
                     }
                 </tbody>
             </table>
-            
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import LoginPage from "./components/auth/Login/LoginPage";
 import RegisterPage from "./components/auth/Register/RegisterPage";
+import EditPage from "./components/edit";
 import Navbar from "./components/Navbar";
 
 import {
@@ -28,7 +29,7 @@ function App() {
           </Route>
 
           <Route exact path="/user/edit/:id">
-            <RegisterPage />
+            <EditPage />
           </Route>
         </Switch>
       </div>

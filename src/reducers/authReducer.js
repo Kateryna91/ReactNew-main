@@ -9,7 +9,7 @@ const initialState = {
 
 const authReducer = (state=initialState, action) => {
     const {type, payload}=action;
-    console.log ('payload', payload)
+    // console.log ('payload', payload)
 
     switch(type){
 case REGISTER:{    

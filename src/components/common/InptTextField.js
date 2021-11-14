@@ -12,7 +12,8 @@ const InputTextField = ({
     console.log("error", error);
     return (
         <div className="mb-3">
-            <label htmlFor={field}>{label}</label>
+           {type!="hidden" && <label htmlFor={field}>{label}</label>}
+            
             <input type={type}
                 className={classnames("form-control", 
                     { "is-invalid": error },
