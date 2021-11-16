@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useRef, useState, useSelector} from 'react'
 import validationFields from './validation';
 import { Formik, Form} from 'formik';
 import MyTextInput from '../../common/MyTextInput';
@@ -21,8 +21,9 @@ const RegisterPage = () => {
     const titleRef = useRef();
     const [invalid, setInvalid] = useState([]);
     const history = useHistory();
-
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
+    const { errors } = useSelector(state => state.auth);
 
     const onSubmitHandler = (values) => {
 
@@ -35,10 +36,12 @@ const RegisterPage = () => {
 
         dispatch(RegisterUser(formData))
             .then(result => {
+                setLoading(false);
                 history.push("/");
             })
             .catch(ex => {
                 const {errors} = ex;
+                setLoading(false);
                 Object.entries(errors).forEach(([key, values]) => {
                     let message = '';
                     values.forEach(text => message += text + " ");

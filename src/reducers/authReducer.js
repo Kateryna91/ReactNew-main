@@ -1,6 +1,6 @@
 import { REGISTER } from "../constants/actionTypes";
 import { LOGIN } from "../constants/actionTypes";
-import { LOGOUT } from "../constants/actionTypes";
+import { LOGOUT, SET_ROLE  } from "../constants/actionTypes";
 
 const initialState = {
     isAuth: false,
@@ -32,7 +32,12 @@ case LOGOUT: {
         isAuth: false
     }
 }
-
+case SET_ROLE: {
+    return { 
+        ...state,
+        role: action.payload
+    }
+}
         default: {
             return state;
         }
